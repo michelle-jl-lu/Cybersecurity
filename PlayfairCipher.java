@@ -1,4 +1,4 @@
-public class PlayfairCypher {
+public class PlayfairCipher {
 
     public static int[] locate(String letter, String[][] playfairKey) {
         int[] coords = new int[2];
@@ -32,18 +32,18 @@ public class PlayfairCypher {
 
     public static void horizontalEncode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
         int limit = playfairKey[0].length - 1;
-        if (firstLetter[0] < limit) {
+        if (firstLetter[1] == limit) {
+            System.out.print(playfairKey[firstLetter[0]][0]);}
+        else if (firstLetter[1] < limit) {
             System.out.print(playfairKey[firstLetter[0]][firstLetter[1] + 1]);
         }
-        if (firstLetter[0] == limit) {
-            System.out.print(playfairKey[firstLetter[0]][0]);
-        }
-        if (secondLetter[0] < limit) {
-            System.out.print(playfairKey[secondLetter[0]][secondLetter[1] + 1]);
-        }
-        if (secondLetter[0] == limit) {
+        if (secondLetter[1] == limit) {
             System.out.print(playfairKey[secondLetter[0]][0]);
         }
+        else if (secondLetter[1] < limit) {
+            System.out.print(playfairKey[secondLetter[0]][secondLetter[1] + 1]);
+        }
+
     }
 
     public static void regularEncode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
@@ -57,7 +57,7 @@ public class PlayfairCypher {
 
     public static void encode(String code, String[][] playfairKey) {
         System.out.println("Returning Encoded Code: ");
-        for (int i = 0; i < code.length() - 2; i++) {
+        for (int i = 0; i <= code.length() - 2; i++) {
             String currentPair = code.substring(i, i + 2);
             String firstLetter = currentPair.substring(0, 1);
             String secondLetter = currentPair.substring(1);
@@ -90,17 +90,17 @@ public class PlayfairCypher {
         }
     }
     public static void horizontalDecode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
-        int limit = playfairKey[0].length - 1;;
-        if (firstLetter[0] > 0) {
+        int limit = playfairKey[0].length - 1;
+        if (firstLetter[1] > 0) {
             System.out.print(playfairKey[firstLetter[0]][firstLetter[1] - 1]);
         }
-        if (firstLetter[0] == 0) {
+        if (firstLetter[1] == 0) {
             System.out.print(playfairKey[firstLetter[0]][limit]);
         }
-        if (secondLetter[0] > limit) {
+        if (secondLetter[1] > 0) {
             System.out.print(playfairKey[secondLetter[0]][secondLetter[1] - 1]);
         }
-        if (secondLetter[0] == 0) {
+        if (secondLetter[1] == 0) {
             System.out.print(playfairKey[secondLetter[0]][limit]);
         }
     }
@@ -115,8 +115,8 @@ public class PlayfairCypher {
     }
 
     public static void decode(String code, String[][] playfairKey) {
-        System.out.println("Returning Encoded Code: ");
-        for (int i = 0; i < code.length() - 2; i++) {
+        System.out.println("Returning Decoded Code: ");
+        for (int i = 0; i <= code.length() - 2; i++) {
             String currentPair = code.substring(i, i + 2);
             String firstLetter = currentPair.substring(0, 1);
             String secondLetter = currentPair.substring(1);
@@ -155,16 +155,16 @@ public class PlayfairCypher {
         return code;
     }
 
-
     public static void main(String[] args) {
         String[][] playfairKey = playfairKey();
         String choice = (args[0]).toUpperCase();
-        String code = (args[1]).toUpperCase();
+        String code = insertDouble((args[1]).toUpperCase());
+        if ((code.length() % 2) != 0) code += "Z";
         if (choice.equals("ENCODE")){
             encode(code, playfairKey);
         }
         if (choice.equals("DECODE")){
-            encode(code, playfairKey);
+            decode(code, playfairKey);
         }
 
     }
