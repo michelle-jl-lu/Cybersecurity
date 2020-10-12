@@ -132,14 +132,20 @@ public class PlayfairCipher {
         System.out.println("");
     }
 
-    public static String[][] playfairKey() {
-        String[][] playfairKey = {
-                {"A", "B", "C", "D", "E"},
-                {"F", "G", "H", "I", "K"},
-                {"L", "M", "N", "O", "P"},
-                {"Q", "R", "S", "T", "U"},
-                {"V", "W", "X", "Y", "Z"},
-        };
+    public static String[][] playfairKey(String key) {
+        String[][] playfairKey = new String[5][5];
+        int counter = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i == 4 && j == 5) {
+                    playfairKey[i][j] = key.substring(counter);
+                    break;
+                } else {
+                    playfairKey[i][j] = key.substring(counter, counter + 1);
+                }
+                counter++;
+            }
+        }
         return playfairKey;
     }
 
@@ -156,9 +162,10 @@ public class PlayfairCipher {
     }
 
     public static void main(String[] args) {
-        String[][] playfairKey = playfairKey();
         String choice = (args[0]).toUpperCase();
         String code = insertDouble((args[1]).toUpperCase());
+        String key = (args[2]).toUpperCase();
+        String[][] playfairKey = playfairKey(key);
         if ((code.length() % 2) != 0) code += "Z";
         if (choice.equals("ENCODE")){
             encode(code, playfairKey);
