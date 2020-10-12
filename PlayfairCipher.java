@@ -16,32 +16,32 @@ public class PlayfairCipher {
     // ENCODING CODE
     public static void verticalEncode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
         int limit = playfairKey.length - 1;
-        if (firstLetter[0] < limit) {
-            System.out.print(playfairKey[firstLetter[0] + 1][firstLetter[1]]);
+        if (firstLetter[1] < limit) {
+            System.out.print(playfairKey[firstLetter[0]][firstLetter[1] + 1]);
         }
-        if (firstLetter[0] == limit) {
-            System.out.print(playfairKey[0][firstLetter[1]]);
+        if (firstLetter[1] == limit) {
+            System.out.print(playfairKey[firstLetter[0]][1]);
         }
-        if (secondLetter[0] < limit) {
-            System.out.print(playfairKey[secondLetter[0] + 1][secondLetter[1]]);
+        if (secondLetter[1] < limit) {
+            System.out.print(playfairKey[secondLetter[0]][secondLetter[1] + 1]);
         }
-        if (secondLetter[0] == limit) {
-            System.out.print(playfairKey[0][secondLetter[1]]);
+        if (secondLetter[1] == limit) {
+            System.out.print(playfairKey[secondLetter[0]][1]);
         }
     }
 
     public static void horizontalEncode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
         int limit = playfairKey[0].length - 1;
-        if (firstLetter[1] == limit) {
-            System.out.print(playfairKey[firstLetter[0]][0]);}
-        else if (firstLetter[1] < limit) {
-            System.out.print(playfairKey[firstLetter[0]][firstLetter[1] + 1]);
+        if (firstLetter[0] == limit) {
+            System.out.print(playfairKey[0][firstLetter[1]]);}
+        else if (firstLetter[0] < limit) {
+            System.out.print(playfairKey[firstLetter[0] + 1][firstLetter[1]]);
         }
-        if (secondLetter[1] == limit) {
-            System.out.print(playfairKey[secondLetter[0]][0]);
+        if (secondLetter[0] == limit) {
+            System.out.print(playfairKey[0][secondLetter[1]]);
         }
-        else if (secondLetter[1] < limit) {
-            System.out.print(playfairKey[secondLetter[0]][secondLetter[1] + 1]);
+        else if (secondLetter[0] < limit) {
+            System.out.print(playfairKey[secondLetter[0] + 1][secondLetter[1]]);
         }
 
     }
@@ -76,32 +76,33 @@ public class PlayfairCipher {
     // DECODING CODE
     public static void verticalDecode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
         int limit = playfairKey.length - 1;
-        if (firstLetter[0] > 0) {
-            System.out.print(playfairKey[firstLetter[0] - 1][firstLetter[1]]);
-        }
-        if (firstLetter[0] == 0) {
-            System.out.print(playfairKey[limit][firstLetter[1]]);
-        }
-        if (secondLetter[0] > 0) {
-            System.out.print(playfairKey[secondLetter[0] - 1][secondLetter[1]]);
-        }
-        if (secondLetter[0] == 0) {
-            System.out.print(playfairKey[limit][secondLetter[1]]);
-        }
-    }
-    public static void horizontalDecode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
-        int limit = playfairKey[0].length - 1;
         if (firstLetter[1] > 0) {
-            System.out.print(playfairKey[firstLetter[0]][firstLetter[1] - 1]);
+            System.out.print(playfairKey[firstLetter[0]][firstLetter[1]-1]);
         }
         if (firstLetter[1] == 0) {
             System.out.print(playfairKey[firstLetter[0]][limit]);
         }
         if (secondLetter[1] > 0) {
-            System.out.print(playfairKey[secondLetter[0]][secondLetter[1] - 1]);
+            System.out.print(playfairKey[secondLetter[0]][secondLetter[1]-1]);
         }
         if (secondLetter[1] == 0) {
             System.out.print(playfairKey[secondLetter[0]][limit]);
+        }
+    }
+
+    public static void horizontalDecode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
+        int limit = playfairKey[0].length - 1;
+        if (firstLetter[0] > 0) {
+            System.out.print(playfairKey[firstLetter[0]-1][firstLetter[1]]);
+        }
+        if (firstLetter[0] == 0) {
+            System.out.print(playfairKey[limit][firstLetter[1]]);
+        }
+        if (secondLetter[0] > 0) {
+            System.out.print(playfairKey[secondLetter[0]-1][secondLetter[1]]);
+        }
+        if (secondLetter[0] == 0) {
+            System.out.print(playfairKey[limit][1]);
         }
     }
 
@@ -155,8 +156,8 @@ public class PlayfairCipher {
             String secondLetter = code.substring(i + 1, i + 2);
             if (firstLetter.equals(secondLetter)) {
                 code = code.substring(0, i + 1) + "X" + code.substring(i + 1);
-                insertDouble(code);
             }
+            i++;
         }
         return code;
     }
