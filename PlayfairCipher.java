@@ -1,3 +1,29 @@
+/******************************************************************************
+ *  Michelle Lu    Cybersecurity PD 5
+ *
+ *  Compilation:  javac PlayfairCipher.java
+ *  Execution:    java PlayfairCipher encode code playfaircipherkey
+ *                java PlayfairCipher decode code playfaircipherkey
+ *
+ *  Dependencies: none
+ *
+ *  Encodes a plain text given a playfair cipher key, decodes a given encoded text using
+ *  the given playfair cipher key.
+ *
+ *  % java PlayfairCipher encode Dragonball ABCDEFGHIKLMNOPQRSTUVWXYZ
+ *  Encoded Text: BTBFTSGFNVPV
+ *
+ *  % java PlayfairCipher decode BTBFTSGFNVPV ABCDEFGHIKLMNOPQRSTUVWXYZ
+ *  Decoded Text: DRAGONBALXLZ
+ *
+ *  % java PlayfairCipher encode JIMJAMESJACK QWERTYUIOPASDFGHKLZXCVBNM
+ *  Encoded Text: PLPBYDBTDUSVVN
+ *
+ *  % java PlayfairCipher decode PLPBYDBTDUSVVN QWERTYUIOPASDFGHKLZXCVBNM
+ *  Decoded Text: IXIMIAMESIACKZ
+ *
+ ******************************************************************************/
+
 public class PlayfairCipher {
 
     public static int[] locate(String letter, String[][] playfairKey) {
@@ -13,6 +39,18 @@ public class PlayfairCipher {
         return coords;
     }
 
+    public static String changeJ (String code){
+        String newCode = "";
+        for (int i = 0; i < code.length()-1; i++){
+            String testcode = code.substring(i,i+1);
+            if (testcode.equals("J")) newCode += "I";
+            else newCode += testcode;
+        }
+        if (code.substring(code.length()-1).equals("J")) newCode+= "I";
+        else newCode += code.substring(code.length()-1);
+        return newCode;
+    }
+
     // ENCODING CODE
     public static void verticalEncode(int[] firstLetter, int[] secondLetter, String[][] playfairKey) {
         int limit = playfairKey.length - 1;
@@ -20,13 +58,13 @@ public class PlayfairCipher {
             System.out.print(playfairKey[firstLetter[0]][firstLetter[1] + 1]);
         }
         if (firstLetter[1] == limit) {
-            System.out.print(playfairKey[firstLetter[0]][1]);
+            System.out.print(playfairKey[firstLetter[0]][0]);
         }
         if (secondLetter[1] < limit) {
             System.out.print(playfairKey[secondLetter[0]][secondLetter[1] + 1]);
         }
         if (secondLetter[1] == limit) {
-            System.out.print(playfairKey[secondLetter[0]][1]);
+            System.out.print(playfairKey[secondLetter[0]][0]);
         }
     }
 
@@ -56,7 +94,7 @@ public class PlayfairCipher {
     }
 
     public static void encode(String code, String[][] playfairKey) {
-        System.out.println("Returning Encoded Code: ");
+        System.out.print("Encoded Code: ");
         for (int i = 0; i <= code.length() - 2; i++) {
             String currentPair = code.substring(i, i + 2);
             String firstLetter = currentPair.substring(0, 1);
@@ -116,7 +154,7 @@ public class PlayfairCipher {
     }
 
     public static void decode(String code, String[][] playfairKey) {
-        System.out.println("Returning Decoded Code: ");
+        System.out.print("Decoded Code: ");
         for (int i = 0; i <= code.length() - 2; i++) {
             String currentPair = code.substring(i, i + 2);
             String firstLetter = currentPair.substring(0, 1);
@@ -164,7 +202,9 @@ public class PlayfairCipher {
 
     public static void main(String[] args) {
         String choice = (args[0]).toUpperCase();
-        String code = insertDouble((args[1]).toUpperCase());
+        String code = (args[1]).toUpperCase();
+        code = changeJ(code);
+        code = insertDouble(code);
         String key = (args[2]).toUpperCase();
         String[][] playfairKey = playfairKey(key);
         if ((code.length() % 2) != 0) code += "Z";
