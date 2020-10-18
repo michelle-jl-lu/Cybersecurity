@@ -24,7 +24,7 @@
  *
  ******************************************************************************/
 
-public class VigenereEncoder{
+public class VigenereCipher{
 
     // The English Alphabet in a string array
     public static String[] alphabet() {
